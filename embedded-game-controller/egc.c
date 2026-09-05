@@ -11,6 +11,13 @@
 #include "usb_backend.h"
 #include "utils.h"
 
+ 
+/* Put this forward declaration somewhere near the top of the file containing the array */
+#ifdef WITH_DRIVER_XBOX
+extern const egc_device_driver_t xbox_usb_device_driver;
+#endif
+
+/* Insert the driver pointer straight into the lookup table matrix */
 static const egc_device_driver_t *usb_device_drivers[] = {
 #ifdef WITH_DRIVER_DS3
     &ds3_usb_device_driver,
@@ -27,7 +34,11 @@ static const egc_device_driver_t *usb_device_drivers[] = {
 #ifdef WITH_DRIVER_WIIMOTE
     &wm_device_driver,
 #endif
+#ifdef WITH_DRIVER_XBOX
+    &xbox_usb_device_driver,
+#endif
 };
+
 
 bool _egc_enable_accelerometer_default = true;
 bool _egc_enable_gyroscope_default = true;
